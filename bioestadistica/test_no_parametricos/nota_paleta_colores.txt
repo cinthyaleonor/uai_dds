@@ -1,0 +1,7 @@
+Paleta personalizada: Los colores en hummingbird_palette están inspirados en las tonalidades de los picaflores.
+
+Verde esmeralda (#76b041): Color típico del plumaje de picaflores.
+Azul iridiscente (#4f83cc): Para representar los tonos brillantes de sus plumas.
+Rojo rubí (#ff6361): Para reflejar el brillo de sus gargantas.
+Amarillo dorado (#ffa600): Simbolizando tonos de luz reflejados en sus alas.
+Morado vibrante (#9b59b6): Para agregar un toque de las variaciones de colores que se ven en ciertas especies.
