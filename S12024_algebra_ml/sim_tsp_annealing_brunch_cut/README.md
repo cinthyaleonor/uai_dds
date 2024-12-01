@@ -43,12 +43,13 @@ El simulador ofrece una comparación gráfica entre ambos métodos, permitiendo 
 
 ## Estructura del repositorio
 
+```
 tsp_simulator_alods/
-├── tsp_simulator.py       # Código fuente principal
+├── simulacion_recocido_branch_and_cut_plots.py       # Código fuente principal
 ├── README.md              # Documentación en Markdown
 ├── requirements.txt       # Dependencias del proyecto
 └── .gitignore             # Archivos/carpetas a ignorar por Git
-
+```
 
 ## 🛠️ Requisitos
 
@@ -162,5 +163,3 @@ Distribuido bajo la Licencia MIT. Ver `LICENSE` para más información.
 ## 🔗 Contacto
 
 Cinthya Leonor Vergara Silva - [civergara@alumnos.uai.cl]
-
-Enlace del Proyecto: [https://github.com/tuusuario/tsp-simulator](https://github.com/tuusuario/tsp-simulator)
