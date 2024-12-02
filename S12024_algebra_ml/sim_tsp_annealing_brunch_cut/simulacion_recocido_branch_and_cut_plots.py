@@ -266,14 +266,12 @@ if __name__ == "__main__":
     pd.set_option('display.max_rows', None)     # Muestra todas las filas
     pd.set_option('display.width', 1000)        # Ajusta el ancho de la tabla en la consola
 
-    problema = TSPSintetico(num_ciudades=10, semilla=42)
-
     # Ejemplo de uso de la función
-    problema = TSPSintetico(num_ciudades=10, semilla=42)
+    problema = TSPSintetico(num_ciudades=15, semilla=42)
     mostrar_resultados_esquemas(problema)
-
     comparar_esquemas_reduccion(problema)
+
     optimo_bc, tiempo_bc = branch_and_cut_iterativo(problema)
     print(f"Branch and Cut - Distancia óptima: {optimo_bc}, Tiempo: {tiempo_bc:.2f} segundos")
 
-    comparar_rendimiento(42, 15)
+    comparar_rendimiento(42, 15) 
