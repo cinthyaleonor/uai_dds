@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios de Jackknife</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background: #f8f9fa;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+            background: #ecf0f1;
+            padding: 10px;
+            border-left: 4px solid #3498db;
+        }
+        h3 {
+            color: #2980b9;
+            margin-top: 25px;
+        }
+        .problema {
+            background: #e8f4f8;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #2980b9;
+        }
+        .solucion {
+            background: #f0f8e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #27ae60;
+        }
+        .conclusion {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #ffc107;
+            font-weight: bold;
+        }
+        .formula {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fb;
+            border-radius: 8px;
+        }
+        ul {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Resolución de Ejercicios de Jackknife</h1>
+        
+        <h2>Ejercicio 1: Sesgo del Estimador Jackknife</h2>
+        
+        <div class="problema">
+            <strong>Problema:</strong> Se tiene una muestra aleatoria $X_1, \ldots, X_n$ asociada a cierta población de parámetro $\mu$. Sea $\hat{\theta} = \bar{x}$ una estimación de $\mu$. Mostrar que al realizar la estimación del parámetro $\mu$ empleando el método de Jackknife, el sesgo asociado al estimador $\hat{\theta}_{Jack}$ es 0.
+        </div>
+
+        <div class="solucion">
+            <strong>Solución:</strong><br><br>
+            
+            El estimador Jackknife se define como:
+            <div class="formula">
+                $$\hat{\theta}_{Jack} = n\hat{\theta} - (n-1)\hat{\theta}_{(-i)}$$
+            </div>
+            
+            donde $\hat{\theta}_{(-i)}$ es el estimador calculado omitiendo la observación $i$-ésima.<br><br>
+            
+            Para la media muestral:
+            <ul>
+                <li>$\hat{\theta} = \bar{x} = \frac{1}{n}\sum_{i=1}^n X_i$</li>
+                <li>$\hat{\theta}_{(-i)} = \bar{x}_{(-i)} = \frac{1}{n-1}\sum_{j \neq i} X_j$</li>
+            </ul>
+            
+            Calculamos $\hat{\theta}_{(-i)}$:
+            <div class="formula">
+                $$\hat{\theta}_{(-i)} = \frac{1}{n-1}\left(\sum_{j=1}^n X_j - X_i\right) = \frac{n\bar{x} - X_i}{n-1}$$
+            </div>
+            
+            El estimador Jackknife promedio es:
+            <div class="formula">
+                $$\hat{\theta}_{Jack} = \frac{1}{n}\sum_{i=1}^n \left[n\hat{\theta} - (n-1)\hat{\theta}_{(-i)}\right]$$
+            </div>
+            
+            Sustituyendo:
+            <div class="formula">
+                $$\hat{\theta}_{Jack} = \frac{1}{n}\sum_{i=1}^n \left[n\bar{x} - (n-1)\frac{n\bar{x} - X_i}{n-1}\right]$$
+                $$= \frac{1}{n}\sum_{i=1}^n \left[n\bar{x} - (n\bar{x} - X_i)\right]$$
+                $$= \frac{1}{n}\sum_{i=1}^n X_i = \bar{x}$$
+            </div>
+            
+            Por lo tanto: $E[\hat{\theta}_{Jack}] = E[\bar{x}] = \mu$
+        </div>
+
+        <div class="conclusion">
+            <strong>Conclusión:</strong> El sesgo es $\text{Sesgo}(\hat{\theta}_{Jack}) = E[\hat{\theta}_{Jack}] - \mu = 0$
+        </div>
+
+        <h2>Ejercicio 2: Distribución Discreta</h2>
+        
+        <div class="problema">
+            <strong>Parámetros:</strong> $r > 0$ conocido, $\theta \in [0,1]$ a estimar<br>
+            <strong>Función de probabilidad:</strong>
+            <div class="formula">
+                $$p_X(x;\theta) = \binom{r+x-1}{x}(1-\theta)^x \theta^r \quad ; \quad x = 0,1,2,3,\ldots$$
+            </div>
+        </div>
+
+        <h3>a) Estimador Máximo Verosímil</h3>
+        
+        <div class="solucion">
+            La función de verosimilitud para una muestra de tamaño $n$:
+            <div class="formula">
+                $$L(\theta) = \prod_{i=1}^n \binom{r+x_i-1}{x_i}(1-\theta)^{x_i} \theta^r$$
+                $$= \theta^{nr}(1-\theta)^{\sum_{i=1}^n x_i} \prod_{i=1}^n \binom{r+x_i-1}{x_i}$$
+            </div>
+            
+            La log-verosimilitud:
+            <div class="formula">
+                $$\ell(\theta) = nr\ln(\theta) + \left(\sum_{i=1}^n x_i\right)\ln(1-\theta) + C$$
+            </div>
+            
+            Derivando e igualando a cero:
+            <div class="formula">
+                $$\frac{d\ell}{d\theta} = \frac{nr}{\theta} - \frac{\sum_{i=1}^n x_i}{1-\theta} = 0$$
+            </div>
+            
+            Resolviendo:
+            <div class="formula">
+                $$\frac{nr}{\theta} = \frac{\sum_{i=1}^n x_i}{1-\theta}$$
+                $$nr(1-\theta) = \theta \sum_{i=1}^n x_i$$
+                $$nr = \theta\left(nr + \sum_{i=1}^n x_i\right)$$
+            </div>
+        </div>
+
+        <div class="conclusion">
+            <strong>Estimador MLE:</strong>
+            $$\hat{\theta}_{MLE} = \frac{nr}{nr + \sum_{i=1}^n x_i} = \frac{r}{r + \bar{x}}$$
+        </div>
+
+        <h3>b) Aplicación con muestra específica</h3>
+        
+        <div class="solucion">
+            <strong>Datos:</strong> $n = 5$, $x = (3,0,2,17,9)$, $\sum x_i = 31$, $\bar{x} = 6.2$<br><br>
+            
+            <div class="formula">
+                $$\hat{\theta}_{MLE} = \frac{r}{r + 6.2}$$
+            </div>
+            
+            <strong>Para aplicar Jackknife, calculamos $\hat{\theta}_{(-i)}$ para cada observación:</strong>
+            
+            <ul>
+                <li>$\hat{\theta}_{(-1)} = \frac{r}{r + \frac{31-3}{4}} = \frac{r}{r + 7}$</li>
+                <li>$\hat{\theta}_{(-2)} = \frac{r}{r + \frac{31-0}{4}} = \frac{r}{r + 7.75}$</li>
+                <li>$\hat{\theta}_{(-3)} = \frac{r}{r + \frac{31-2}{4}} = \frac{r}{r + 7.25}$</li>
+                <li>$\hat{\theta}_{(-4)} = \frac{r}{r + \frac{31-17}{4}} = \frac{r}{r + 3.5}$</li>
+                <li>$\hat{\theta}_{(-5)} = \frac{r}{r + \frac{31-9}{4}} = \frac{r}{r + 5.5}$</li>
+            </ul>
+            
+            <strong>Estimador Jackknife:</strong>
+            <div class="formula">
+                $$\hat{\theta}_{Jack} = 5\hat{\theta}_{MLE} - 4 \cdot \frac{1}{5}\sum_{i=1}^5 \hat{\theta}_{(-i)}$$
+            </div>
+        </div>
+
+        <h2>Ejercicio 3: Distribución Bernoulli</h2>
+        
+        <div class="problema">
+            <strong>Parámetro:</strong> $\psi(\theta) = \theta(1-\theta)$ (varianza de Bernoulli)
+        </div>
+
+        <h3>a) Estimador MLE de $\psi(\theta)$</h3>
+        
+        <div class="solucion">
+            Para Bernoulli: $\hat{\theta}_{MLE} = \bar{X}$<br><br>
+            
+            Por el método delta:
+            <div class="formula">
+                $$\hat{\psi}(\theta)_{MLE} = \psi(\hat{\theta}_{MLE}) = \bar{X}(1-\bar{X})$$
+            </div>
+        </div>
+
+        <h3>b) Sesgo del estimador MLE</h3>
+        
+        <div class="solucion">
+            <div class="formula">
+                $$E[\hat{\psi}(\theta)_{MLE}] = E[\bar{X}(1-\bar{X})] = E[\bar{X}] - E[\bar{X}^2]$$
+                $$= \theta - (\text{Var}(\bar{X}) + (E[\bar{X}])^2)$$
+                $$= \theta - \left(\frac{\theta(1-\theta)}{n} + \theta^2\right)$$
+                $$= \theta - \theta^2 - \frac{\theta(1-\theta)}{n}$$
+                $$= \theta(1-\theta) - \frac{\theta(1-\theta)}{n} = \psi(\theta)\left(1 - \frac{1}{n}\right)$$
+            </div>
+        </div>
+
+        <div class="conclusion">
+            <strong>Sesgo:</strong> $\text{Sesgo} = -\frac{\psi(\theta)}{n}$
+        </div>
+
+        <h3>c) Estimador Jackknife</h3>
+        
+        <div class="solucion">
+            <div class="formula">
+                $$\hat{\psi}(\theta)_{(-i)} = \bar{X}_{(-i)}(1-\bar{X}_{(-i)})$$
+            </div>
+            
+            donde $\bar{X}_{(-i)} = \frac{n\bar{X} - X_i}{n-1}$
+            
+            <div class="formula">
+                $$\hat{\psi}(\theta)_{Jack} = n\hat{\psi}(\theta)_{MLE} - (n-1)\frac{1}{n}\sum_{i=1}^n \hat{\psi}(\theta)_{(-i)}$$
+            </div>
+        </div>
+
+        <h3>d) Sesgo del estimador Jackknife</h3>
+        
+        <div class="solucion">
+            El método Jackknife está diseñado para eliminar el sesgo de orden $O(1/n)$.<br><br>
+            
+            Dado que el sesgo del estimador MLE es $-\frac{\psi(\theta)}{n}$, el estimador Jackknife tendrá sesgo de orden $O(1/n^2)$, que es asintóticamente despreciable.
+        </div>
+
+        <div class="conclusion">
+            <strong>Resultado:</strong> $\text{Sesgo}(\hat{\psi}(\theta)_{Jack}) = O(1/n^2) \approx 0$ para $n$ grande.
+        </div>
+
+        <h2>Puntos Clave a Recordar</h2>
+        
+        <div style="background: #e8f5e8; padding: 20px; border-radius: 8px; margin-top: 30px;">
+            <ol>
+                <li><strong>Jackknife reduce el sesgo:</strong> El método Jackknife está diseñado para eliminar sesgos de orden $O(1/n)$ y convertirlos en sesgos de orden $O(1/n^2)$.</li>
+                <br>
+                <li><strong>Fórmula general:</strong> $\hat{\theta}_{Jack} = n\hat{\theta} - (n-1)\frac{1}{n}\sum_{i=1}^n \hat{\theta}_{(-i)}$</li>
+                <br>
+                <li><strong>Para la media muestral:</strong> El estimador Jackknife es insesgado porque la media ya es insesgada.</li>
+                <br>
+                <li><strong>Para estimadores con sesgo:</strong> Como en el caso de $\psi(\theta) = \theta(1-\theta)$, Jackknife reduce significativamente el sesgo.</li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>
