@@ -8,7 +8,9 @@
 
 El estimador Jackknife se define como:
 
-$$\hat{\theta}_{Jack} = n\hat{\theta} - (n-1)\hat{\theta}_{(-i)}$$
+$$
+\hat{\theta}_{Jack} = n\hat{\theta} - (n-1)\hat{\theta}_{(-i)}
+$$
 
 donde $\hat{\theta}_{(-i)}$ es el estimador calculado omitiendo la observación $i$-ésima.
 
@@ -19,7 +21,9 @@ Para la media muestral:
 
 Calculamos $\hat{\theta}_{(-i)}$:
 
-$$\hat{\theta}_{(-i)} = \frac{1}{n-1}\left(\sum_{j=1}^n X_j - X_i\right) = \frac{n\bar{x} - X_i}{n-1}$$
+$$
+\hat{\theta}_{(-i)} = \frac{1}{n-1}\left(\sum_{j=1}^n X_j - X_i\right) = \frac{n\bar{x} - X_i}{n-1}
+$$
 
 El estimador Jackknife promedio es:
 
